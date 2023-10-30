@@ -1,10 +1,11 @@
-package main
+package stack
 
 import (
 	"errors"
 	"sync"
 )
 
+// Stack is a fundamental data structure that follows the Last-In-First-Out (LIFO)
 type Stack[T any] struct {
 	list []T
 	mu   sync.Mutex
@@ -16,6 +17,10 @@ func NewStack[T any]() Stack[T] {
 
 func (s *Stack[T]) Empty() bool {
 	return len(s.list) == 0
+}
+
+func (s *Stack[T]) Count() int {
+	return len(s.list)
 }
 
 func (s *Stack[T]) Peek() T {
