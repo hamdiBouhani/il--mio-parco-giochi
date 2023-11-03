@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/hamdiBouhani/il-mio-parco-giochi/stack"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
@@ -32,6 +33,14 @@ func putHandler(c *fiber.Ctx, db *sql.DB) error {
 
 func deleteHandler(c *fiber.Ctx, db *sql.DB) error {
 	return c.SendString("Hello")
+}
+
+func EvaluatePostfixExpressionHandler(c *fiber.Ctx, expression string) error {
+	result, err := stack.EvaluatePostfixExpression(expression)
+	if err != nil {
+		return c.SendString(err.Error())
+	}
+	return c.SendString("Result: " + fmt.Sprintf("%v", result))
 }
 
 func main() {
@@ -64,6 +73,11 @@ func main() {
 
 	app.Delete("/delete", func(c *fiber.Ctx) error {
 		return deleteHandler(c, db)
+	})
+
+	app.Get("/evaluate-postfix-expression", func(c *fiber.Ctx) error {
+		expression := c.Query("expression")
+		return EvaluatePostfixExpressionHandler(c, expression)
 	})
 
 	port := os.Getenv("PORT")
