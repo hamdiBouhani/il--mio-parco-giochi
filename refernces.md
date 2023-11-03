@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/68615135/how-do-i-get-the-querystring-using-golangs-fiber

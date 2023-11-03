@@ -76,6 +76,7 @@ func main() {
 	})
 
 	app.Get("/evaluate-postfix-expression", func(c *fiber.Ctx) error {
+		fmt.Println(string(c.Request().URI().QueryString()))
 		expression := c.Query("expression")
 		return EvaluatePostfixExpressionHandler(c, expression)
 	})
